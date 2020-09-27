@@ -8,6 +8,7 @@ const { ExpressPeerServer } = require('peer');
 const peerServer = ExpressPeerServer(server, {
   debug: true
 });
+const port=process.env.PORT||3030;
 const { v4: uuidV4 } = require('uuid')
 
 app.use('/peerjs', peerServer);
@@ -20,7 +21,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/:room', (req, res) => {
-  res.render('room', { roomId: req.params.room })
+  res.render('room', { roomId: req.params.room,port:port})
 })
 
 io.on('connection', socket => {
@@ -39,4 +40,4 @@ io.on('connection', socket => {
   })
 })
 
-server.listen(process.env.PORT||3030)
+server.listen(port)
